@@ -16,9 +16,7 @@ import java.io.Serializable;
 public final class BeerBase extends SQLiteOpenHelper implements Serializable{
     // To prevent someone from accidentally instantiating the contract class,
     // make the constructor private.
-    public BeerBase(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
-    }
+
 
     private static final int DATABASE_VERSION=1;
     private static final String DATABASE_NAME = "beer.db";
@@ -27,6 +25,9 @@ public final class BeerBase extends SQLiteOpenHelper implements Serializable{
     public static final String DATE = "date";
     public static final String PRICE = "price";
 
+    public BeerBase(Context context) {
+        super(context, DATABASE_NAME , null, DATABASE_VERSION);
+    }
     @Override
     public void onCreate(SQLiteDatabase db){
         String query = "CREATE TABLE " + TABLE_BEERS + "(" +
@@ -60,9 +61,12 @@ public final class BeerBase extends SQLiteOpenHelper implements Serializable{
         String query = "SELECT * FROM " + TABLE_BEERS + " WHERE 1";
 
         Cursor c = db.rawQuery(query, null);
-        c.moveToFirst();
+        BeerCursorAdapter adapter = new BeerCursorAdapter(this, R.layout.activity_archive, c, 0);
+        this.setListAdapter(adapter);
 
-        while(!c.isAfterLast()){
+       // c.moveToFirst();
+
+       /* while(!c.isAfterLast()){
             if(c.getString(c.getColumnIndex("date"))!=null);
             {
                 dbString+= c.getString(c.getColumnIndex("date"));
@@ -73,5 +77,8 @@ public final class BeerBase extends SQLiteOpenHelper implements Serializable{
         }
         db.close();
         return dbString;
+    */
     }
+
+
 }

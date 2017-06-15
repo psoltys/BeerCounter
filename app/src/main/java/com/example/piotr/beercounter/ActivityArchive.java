@@ -1,8 +1,12 @@
 package com.example.piotr.beercounter;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 
 /**
@@ -21,4 +25,5 @@ public class ActivityArchive extends AppCompatActivity {
         baza.setText(BeersDB.databaseToString());
 
     }
+
 }
