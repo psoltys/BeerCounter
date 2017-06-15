@@ -20,9 +20,9 @@ public class ActivityArchive extends AppCompatActivity {
         setContentView(R.layout.activity_archive);
         Intent i = getIntent();
         baza = (TextView) findViewById(R.id.database);
-        BeerBase BeersDB = ActivityBeer.BeerDB;
+        //BeerBase BeersDB = ActivityBeer.BeerDB;
        // BeerBase BeerDB = (BeerBase)i.getSerializableExtra("base");
-        baza.setText(BeersDB.databaseToString());
+      //  baza.setText(BeersDB.databaseToString());
 
     }
 

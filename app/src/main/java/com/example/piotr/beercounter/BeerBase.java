@@ -42,43 +42,7 @@ public final class BeerBase extends SQLiteOpenHelper implements Serializable{
         onCreate(db);
     }
 
-    public void addBeers(String date, String price){
-        ContentValues values = new ContentValues();
-        values.put(PRICE, price);
-        values.put(DATE, date);
-        SQLiteDatabase db = getWritableDatabase();
-        db.insert(TABLE_BEERS, null, values);
-        db.close();
-    }
 
-    public void deleteBeer(String date){
-        SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("DELETE FROM " + TABLE_BEERS + " WHERE " + DATE + "=\"" + date + "\";");
-    }
-    public String databaseToString(){
-        String dbString = "";
-        SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_BEERS + " WHERE 1";
-
-        Cursor c = db.rawQuery(query, null);
-        BeerCursorAdapter adapter = new BeerCursorAdapter(this, R.layout.activity_archive, c, 0);
-        this.setListAdapter(adapter);
-
-       // c.moveToFirst();
-
-       /* while(!c.isAfterLast()){
-            if(c.getString(c.getColumnIndex("date"))!=null);
-            {
-                dbString+= c.getString(c.getColumnIndex("date"));
-                dbString+= c.getString(c.getColumnIndex("price"));
-                dbString+= "\n";
-            }
-            c.moveToNext();
-        }
-        db.close();
-        return dbString;
-    */
-    }
 
 
 }
