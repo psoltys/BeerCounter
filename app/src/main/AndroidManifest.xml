@@ -16,7 +16,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ActivityBeer"></activity>
-
+        <activity android:name=".ActivityArchive"></activity>
     </application>
 
 </manifest>
