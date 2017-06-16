@@ -48,10 +48,14 @@ public class BeerCursorAdapter  {
         cursor.close();
         return newBeer;
     }
-    public void deleteBeer(String date){
+    public void deleteBeerByDate(String date){
         database.execSQL("DELETE FROM " + TABLE_BEERS + " WHERE " + BeerBase.DATE + "=\"" + date + "\";");
     }
 
+    public void deleteBeerById(String id){
+        database.execSQL("DELETE FROM " + TABLE_BEERS + " WHERE " + BeerBase.COLUMN_ID + "= '" + id + "'");
+
+    }
     public List<Beer> getAllBeers(){
         List<Beer> Beers = new ArrayList<Beer>();
         Cursor cursor = database.query(TABLE_BEERS,allColumns,null,null,null,null,null);

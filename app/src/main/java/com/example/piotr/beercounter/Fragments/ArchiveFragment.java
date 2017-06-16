@@ -51,7 +51,7 @@ public class ArchiveFragment extends Fragment {
             beerDB.open();
             beerDB.addBeers(beers);
 
-            beerRec.setAdapter(new ListAdapter(beerDB.getAllBeers()));
+            beerRec.setAdapter(new ListAdapter(beerDB.getAllBeers(),ArchiveFragment.this));
 //            List<Beer> values = beerDB.getAllBeers();
 //
 //            ArrayAdapter<Beer> adapter = new ArrayAdapter<Beer>(this, android.R.layout.simple_list_item_1, values);
@@ -64,9 +64,13 @@ public class ArchiveFragment extends Fragment {
         else{
             beerDB = new BeerCursorAdapter(activity);
             beerDB.open();
-            beerRec.setAdapter(new ListAdapter(beerDB.getAllBeers()));
+            beerRec.setAdapter(new ListAdapter(beerDB.getAllBeers(), ArchiveFragment.this));
         }
         return view;
+    }
+    public void deleteBeer(long id){
+        beerDB.deleteBeerById(Long.toString(id));
+        beerRec.setAdapter(new ListAdapter(beerDB.getAllBeers(), ArchiveFragment.this));
     }
     @Override
     public void onResume() {
