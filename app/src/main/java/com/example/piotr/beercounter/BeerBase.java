@@ -24,7 +24,8 @@ public final class BeerBase extends SQLiteOpenHelper implements Serializable{
     public static final String COLUMN_ID = "_id";
     public static final String DATE = "date";
     public static final String PRICE = "price";
-
+    public static final String QUANTITY = "quantity";
+    public static final String PRIMARY_PRICE = "primary_price";
     public BeerBase(Context context) {
         super(context, DATABASE_NAME , null, DATABASE_VERSION);
     }
@@ -33,7 +34,7 @@ public final class BeerBase extends SQLiteOpenHelper implements Serializable{
         String query = "CREATE TABLE " + TABLE_BEERS + "(" +
                 COLUMN_ID +" INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 DATE + " TEXT, " +
-                PRICE + " TEXT " + ");";
+                PRICE + " TEXT, " + QUANTITY + " INT, " + PRIMARY_PRICE + " LONG " +");";
         db.execSQL(query);
     }
     @Override

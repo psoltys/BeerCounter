@@ -40,14 +40,14 @@ public class BeerFragment extends Fragment {
 
 
 
-    public static MainFragment newInstance(String loading_msg) {
-        MainFragment loadingFragment = new MainFragment();
+    public static BeerFragment newInstance(String loading_msg) {
+        BeerFragment beerFragment = new BeerFragment();
         if (loading_msg != null) {
             Bundle args = new Bundle();
             args.putString("msg", loading_msg);
-            loadingFragment.setArguments(args);
+            beerFragment.setArguments(args);
         }
-        return loadingFragment;
+        return beerFragment;
     }
 
 
@@ -111,32 +111,22 @@ public class BeerFragment extends Fragment {
                 int day = c.get(Calendar.DAY_OF_MONTH); // current day in the month
                 date = ( year + "/" + month + "/" + day);
                 beerList.setDate(date);
-         //       Intent intent = new Intent(BeerFragment.this, ActivityArchive.class);
-        /*        beerDB = new BeerCursorAdapter(this);
-                beerDB.open();
 
-                List<Beer> values = beerDB.getAllBeers();
-
-                ArrayAdapter<Beer> adapter = new ArrayAdapter<Beer>(this,android.R.layout.simple_list_item_1,values);
-
-                adapter.add(beers);
-                adapter.notifyDataSetChanged();
-                intent.putExtra("base", beerList);
-                startActivity(intent);
-*/
-                //liczPiw = 0;
-                //liczbaPiw.setText(Double.toString(liczPiw));
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content_frame, ArchiveFragment.newInstance(beerList),"beerFragment")
+                        .addToBackStack("archive")
+                        .commit();
 
             }
         }));
         Archive.setOnClickListener((new View.OnClickListener() {
             public void onClick(View v) {
-                Fragment newFragment = new ArchiveFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.content_frame, newFragment);
-                transaction.addToBackStack(null);
-
-                transaction.commit();
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content_frame, ArchiveFragment.newInstance(null),"archiveFragment")
+                        .addToBackStack("archive")
+                        .commit();
             }
         }));
         BeerPrice.setOnClickListener((new View.OnClickListener() {

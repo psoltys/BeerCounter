@@ -22,7 +22,7 @@ public class ActivityArchive extends ListActivity {
     private BeerCursorAdapter beerDB;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_archive);
+        setContentView(R.layout.archive_fragment);
         Intent i = getIntent();
         Beer beers = (Beer)i.getSerializableExtra("base");
 

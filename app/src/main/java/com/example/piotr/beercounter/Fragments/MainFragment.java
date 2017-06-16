@@ -41,23 +41,21 @@ public class MainFragment extends Fragment {
         Archive = (Button) view.findViewById(R.id.Show_Archive);
         new_act.setOnClickListener((new View.OnClickListener() {
             public void onClick(View v) {
-                Fragment newFragment = new BeerFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.content_frame, newFragment);
-                transaction.addToBackStack(null);
-
-                transaction.commit();
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content_frame, BeerFragment.newInstance("cos"),"beerFragment")
+                        .addToBackStack("beer")
+                        .commit();
             }
         }));
 
         Archive.setOnClickListener((new View.OnClickListener() {
             public void onClick(View v) {
-                Fragment newFragment = new ArchiveFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.content_frame, newFragment);
-                transaction.addToBackStack(null);
-
-                transaction.commit();
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content_frame, ArchiveFragment.newInstance(null),"archiveFragment")
+                        .addToBackStack("archive")
+                        .commit();
             }
         }));
         return view;

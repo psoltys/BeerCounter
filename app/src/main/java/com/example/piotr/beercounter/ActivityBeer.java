@@ -41,7 +41,7 @@ public class ActivityBeer extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_beer);
+        setContentView(R.layout.beer_fragment);
 
         Archive = (Button) findViewById(R.id.Show_Archive);
 

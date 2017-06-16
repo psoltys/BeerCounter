@@ -23,7 +23,7 @@ public class BeerCursorAdapter  {
     private SQLiteDatabase database;
     private BeerBase dbHelper;
     private String[] allColumns = { BeerBase.COLUMN_ID,
-            BeerBase.DATE, BeerBase.PRICE };
+            BeerBase.DATE, BeerBase.PRICE, BeerBase.QUANTITY, BeerBase.PRIMARY_PRICE };
     public BeerCursorAdapter(Context context){
         dbHelper = new BeerBase(context);
     }
@@ -39,6 +39,8 @@ public class BeerCursorAdapter  {
         ContentValues values = new ContentValues();
         values.put(BeerBase.PRICE, beers.getFinalPrice());
         values.put(BeerBase.DATE, beers.getDate());
+        values.put(BeerBase.QUANTITY, beers.getQuantity());
+        values.put(BeerBase.PRIMARY_PRICE, beers.getPrice());
         long insertID = database.insert(TABLE_BEERS, null, values);
         Cursor cursor = database.query(TABLE_BEERS,allColumns,null,null,null,null,null);
         cursor.moveToFirst();
@@ -66,7 +68,9 @@ public class BeerCursorAdapter  {
     private Beer cursorToBeer(Cursor cursor){
         Beer beer = new Beer();
         beer.setId(cursor.getLong(0));
-        beer.setPrice(Double.parseDouble(cursor.getString(1)));
+        beer.setDate(cursor.getString(1));
+        beer.setPrice(cursor.getDouble(4));
+        beer.setQuantity(cursor.getInt(3));
         return beer;
     }
 
