@@ -1,14 +1,17 @@
 package com.example.piotr.beercounter;
 
+import java.io.Serializable;
+
 /**
  * Created by Piotr on 2017-06-15.
  */
 
-public class Beer {
+public class Beer implements Serializable {
     private long id;
     private double price;
     private int quantity;
     private String finalPrice;
+    private String date;
 
     public long getId(){
         return id;
@@ -39,8 +42,15 @@ public class Beer {
         return finalPrice;
     }
 
+    public void setDate(String date){
+        this.date = date;
+    }
+
+    public String getDate(){
+        return date;
+    }
     @Override
     public String toString(){
-        return getFinalPrice();
+        return "Cena: "+ getFinalPrice() + " Data: " + getDate() +  " Ilosc: " + getQuantity();
     }
 }

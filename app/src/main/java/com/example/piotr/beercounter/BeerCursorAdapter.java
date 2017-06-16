@@ -35,10 +35,10 @@ public class BeerCursorAdapter  {
         dbHelper.close();
     }
 
-    public Beer addBeers(String date, String price){
+    public Beer addBeers(Beer beers){
         ContentValues values = new ContentValues();
-        values.put(BeerBase.PRICE, price);
-        values.put(BeerBase.DATE, date);
+        values.put(BeerBase.PRICE, beers.getFinalPrice());
+        values.put(BeerBase.DATE, beers.getDate());
         long insertID = database.insert(TABLE_BEERS, null, values);
         Cursor cursor = database.query(TABLE_BEERS,allColumns,null,null,null,null,null);
         cursor.moveToFirst();
@@ -70,31 +70,4 @@ public class BeerCursorAdapter  {
         return beer;
     }
 
-
-
-
-   /*
-    public String databaseToString(){
-        String dbString = "";
-        SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_BEERS + " WHERE 1";
-
-        Cursor c = db.rawQuery(query, null);
-        BeerCursorAdapter adapter = new BeerCursorAdapter(this, R.layout.activity_archive, c, 0);
-        this.setListAdapter(adapter);
-
-        // c.moveToFirst();
-
-       /* while(!c.isAfterLast()){
-            if(c.getString(c.getColumnIndex("date"))!=null);
-            {
-                dbString+= c.getString(c.getColumnIndex("date"));
-                dbString+= c.getString(c.getColumnIndex("price"));
-                dbString+= "\n";
-            }
-            c.moveToNext();
-        }
-        db.close();
-        return dbString;
-    */
     }
