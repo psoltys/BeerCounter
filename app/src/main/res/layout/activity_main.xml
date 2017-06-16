@@ -11,23 +11,12 @@
     tools:context="com.example.piotr.beercounter.MainActivity">
 
 
-    <Button
-        android:text="Pokaż Archiwum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/Show_Archive"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:text="Nowa Aktywność"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/new_activity"
-        android:layout_alignBottom="@+id/Show_Archive"
-        android:layout_alignLeft="@+id/Show_Archive"
-        android:layout_alignStart="@+id/Show_Archive"
-        android:layout_marginBottom="86dp" />
+   <FrameLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:id="@+id/content_frame"
+       android:layout_gravity="fill_vertical">
+   </FrameLayout>
 
 
 </RelativeLayout>
