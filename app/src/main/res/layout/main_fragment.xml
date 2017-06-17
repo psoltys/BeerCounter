@@ -16,18 +16,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/Show_Archive"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:text="Nowa Aktywność"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/new_activity"
-        android:layout_alignBottom="@+id/Show_Archive"
-        android:layout_alignLeft="@+id/Show_Archive"
-        android:layout_alignStart="@+id/Show_Archive"
-        android:layout_marginBottom="86dp" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>

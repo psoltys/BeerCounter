@@ -28,11 +28,9 @@ public class BeerFragment extends Fragment {
     private Button saveButton;
     private Button BeerPrice;
     private Button Archive;
-    private EditText cena;
     private TextView cenaOstateczna;
     private TextView liczbaPiw;
     private int liczPiw;
-    private BeerCursorAdapter beerDB;
     private Beer beerList;
     Calendar c;
     String date;
@@ -58,8 +56,6 @@ public class BeerFragment extends Fragment {
         final View view =inflater.inflate(R.layout.beer_fragment, container, false);
         final Activity activity = getActivity();
 
-
-
         Archive = (Button) view.findViewById(R.id.Show_Archive);
 
         button = (Button) view.findViewById(R.id.button);
@@ -67,16 +63,13 @@ public class BeerFragment extends Fragment {
         saveButton = (Button) view.findViewById(R.id.saveButton);
         BeerPrice = (Button) view.findViewById(R.id.BeerPrice);
 
-        // cena  = (EditText) findViewById(R.id.editText2);
         cenaOstateczna = (TextView) view.findViewById(R.id.textView2);
         liczbaPiw = (TextView) view.findViewById(R.id.liczbaPiw);
 
         c = Calendar.getInstance();
 
         liczPiw = 0;
-        liczbaPiw.setText(Double.toString(liczPiw));
-        //cena.setText('0');
-
+        liczbaPiw.setText(Integer.toString(liczPiw));
 
         beerList = new Beer();
         beerList.setPrice(0);
@@ -88,7 +81,7 @@ public class BeerFragment extends Fragment {
                     liczPiw = 0;
                 else
                     liczPiw--;
-                liczbaPiw.setText(Double.toString(liczPiw));
+                liczbaPiw.setText(Integer.toString(liczPiw));
 
                 beerList.setQuantity(liczPiw);
                 cenaOstateczna.setText("Cena Ostateczna " + beerList.getFinalPrice());
@@ -98,26 +91,9 @@ public class BeerFragment extends Fragment {
         button2.setOnClickListener((new View.OnClickListener() {
             public void onClick(View v) {
                 liczPiw++;
-                liczbaPiw.setText(Double.toString(liczPiw));
+                liczbaPiw.setText(Integer.toString(liczPiw));
                 beerList.setQuantity(liczPiw);
                 cenaOstateczna.setText("Cena Ostateczna " + beerList.getFinalPrice());
-            }
-        }));
-
-        saveButton.setOnClickListener((new View.OnClickListener() {
-            public void onClick(View v) {
-                int year = c.get(Calendar.YEAR); // get the current year
-                int month = c.get(Calendar.MONTH); // month...
-                int day = c.get(Calendar.DAY_OF_MONTH); // current day in the month
-                date = ( year + "/" + month + "/" + day);
-                beerList.setDate(date);
-
-                getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.content_frame, ArchiveFragment.newInstance(beerList),"beerFragment")
-                        .addToBackStack("archive")
-                        .commit();
-
             }
         }));
         Archive.setOnClickListener((new View.OnClickListener() {
@@ -134,7 +110,10 @@ public class BeerFragment extends Fragment {
                 showBeerDialog();
             }
         }));
-
+        saveButton.setOnClickListener((new View.OnClickListener() {
+            public void onClick(View v) {
+                showSaveDialog();}
+        }));
 
         return view;
     }
@@ -151,6 +130,36 @@ public class BeerFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 beerList.setPrice( Double.parseDouble(input.getText().toString()));
+            }
+        });
+        builder.setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+
+            }
+        });
+        builder.show();
+    }
+
+    private void showSaveDialog()
+    {
+        builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Zapisać Aktywność?");
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                int year = c.get(Calendar.YEAR); // get the current year
+                int month = c.get(Calendar.MONTH); // month...
+                int day = c.get(Calendar.DAY_OF_MONTH); // current day in the month
+                date = ( year + "/" + month + "/" + day);
+                beerList.setDate(date);
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.content_frame, ArchiveFragment.newInstance(beerList),"beerFragment")
+                        .addToBackStack("archive")
+                        .commit();
             }
         });
         builder.setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {

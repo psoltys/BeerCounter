@@ -52,14 +52,6 @@ public class ArchiveFragment extends Fragment {
             beerDB.addBeers(beers);
 
             beerRec.setAdapter(new ListAdapter(beerDB.getAllBeers(),ArchiveFragment.this));
-//            List<Beer> values = beerDB.getAllBeers();
-//
-//            ArrayAdapter<Beer> adapter = new ArrayAdapter<Beer>(this, android.R.layout.simple_list_item_1, values);
-//            setListAdapter(adapter);
-//
-//            adapter.add(beers);
-//            adapter.notifyDataSetChanged();
-//
         }
         else{
             beerDB = new BeerCursorAdapter(activity);

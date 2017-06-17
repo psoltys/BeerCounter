@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.piotr.beercounter.Beer;
 import com.example.piotr.beercounter.Fragments.ArchiveFragment;
+import com.example.piotr.beercounter.MainActivity;
 import com.example.piotr.beercounter.R;
 
 import java.util.List;
@@ -33,7 +34,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
         listViewHolder.main_item_lay.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                archiveFragment.deleteBeer(listBeer.get(actualIndex).getId());
+                MainActivity.showDialog(archiveFragment, listBeer, actualIndex );
+              //  archiveFragment.deleteBeer(listBeer.get(actualIndex).getId());
             }
         });
     }
@@ -44,6 +46,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
                 inflate(R.layout.list_item, viewGroup, false);
         return new ListViewHolder(itemView);
     }
+
     public static class ListViewHolder extends RecyclerView.ViewHolder {
         private TextView beer_item_tv;
         private LinearLayout main_item_lay;
@@ -53,4 +56,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
             main_item_lay = (LinearLayout) v.findViewById(R.id.main_item_lay);
         }
     }
+
+
 }
