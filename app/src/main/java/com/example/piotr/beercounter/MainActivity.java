@@ -34,30 +34,30 @@ public class MainActivity extends AppCompatActivity {
                .commit();
     }
 
-    public void showDialog(final ArchiveFragment archiveFragment, final List<Beer> listBeer, final int actualIndex)
-    {
-        builder = new AlertDialog.Builder(this);
-        builder.setTitle("Zapisać Aktywność?");
-
-        final EditText input = new EditText(this);
-        input.setInputType(InputType.TYPE_CLASS_NUMBER |  InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        builder.setView(input);
-
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                archiveFragment.deleteBeer(listBeer.get(actualIndex).getId());
-            }
-        });
-        builder.setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-
-            }
-        });
-        builder.show();
-    }
+//    public void showDialog(final ArchiveFragment archiveFragment, final List<Beer> listBeer, final int actualIndex)
+//    {
+//        builder = new AlertDialog.Builder(this);
+//        builder.setTitle("Zapisać Aktywność?");
+//
+//        final EditText input = new EditText(this);
+//        input.setInputType(InputType.TYPE_CLASS_NUMBER |  InputType.TYPE_NUMBER_FLAG_DECIMAL);
+//        builder.setView(input);
+//
+//        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                archiveFragment.deleteBeer(listBeer.get(actualIndex).getId());
+//            }
+//        });
+//        builder.setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.cancel();
+//
+//            }
+//        });
+//        builder.show();
+//    }
 
 
 }

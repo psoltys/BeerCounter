@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.example.piotr.beercounter.Beer;
 import com.example.piotr.beercounter.BeerCursorAdapter;
 import com.example.piotr.beercounter.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 
@@ -32,6 +34,7 @@ public class BeerFragment extends Fragment {
     private TextView liczbaPiw;
     private int liczPiw;
     private Beer beerList;
+    private DatabaseReference mDatabase;
     Calendar c;
     String date;
     AlertDialog.Builder builder;
@@ -74,6 +77,7 @@ public class BeerFragment extends Fragment {
         beerList = new Beer();
         beerList.setPrice(0);
 
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Beers");
 
         button.setOnClickListener((new View.OnClickListener() {
             public void onClick(View v) {
@@ -155,6 +159,10 @@ public class BeerFragment extends Fragment {
                 int day = c.get(Calendar.DAY_OF_MONTH); // current day in the month
                 date = ( year + "/" + month + "/" + day);
                 beerList.setDate(date);
+
+               // mDatabase.child("Date").setValue(date);
+                mDatabase.push().setValue(beerList);
+
                 getFragmentManager()
                         .beginTransaction()
                         .replace(R.id.content_frame, ArchiveFragment.newInstance(beerList),"beerFragment")

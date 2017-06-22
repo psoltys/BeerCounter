@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "708351721170",
+    "firebase_url": "https://beercounter-bf3c2.firebaseio.com",
+    "project_id": "beercounter-bf3c2",
+    "storage_bucket": "beercounter-bf3c2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:708351721170:android:882343e90fa88e61",
+        "android_client_info": {
+          "package_name": "com.example.piotr.beercounter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "708351721170-7cp4id6b5aqlic0ff45ncc5qapcubmnm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0aV3-qpoyp_j7CbWs_mV3XGs5NW1h_qc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

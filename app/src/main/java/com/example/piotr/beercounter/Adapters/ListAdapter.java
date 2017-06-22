@@ -34,8 +34,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ListViewHolder
         listViewHolder.main_item_lay.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                MainActivity.showDialog(archiveFragment, listBeer, actualIndex );
-              //  archiveFragment.deleteBeer(listBeer.get(actualIndex).getId());
+              //  MainActivity.showDialog(archiveFragment, listBeer, actualIndex );
+                archiveFragment.deleteBeer(listBeer.get(actualIndex).getId());
+
             }
         });
     }
