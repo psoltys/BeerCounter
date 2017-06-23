@@ -73,4 +73,21 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
+    <Button
+        android:id="@+id/addBeers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:text="Dodaj do ceny ostatecznej" />
+
+    <TextView
+        android:id="@+id/beerPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/BeerPrice"
+        android:text="Cena piwa:" />
+
 </RelativeLayout>

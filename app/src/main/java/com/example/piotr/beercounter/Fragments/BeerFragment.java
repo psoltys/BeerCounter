@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.example.piotr.beercounter.Beer;
 import com.example.piotr.beercounter.BeerCursorAdapter;
 import com.example.piotr.beercounter.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -29,12 +31,16 @@ public class BeerFragment extends Fragment {
     private Button button2;
     private Button saveButton;
     private Button BeerPrice;
+    private Button addBeers;
     private Button Archive;
     private TextView cenaOstateczna;
     private TextView liczbaPiw;
+    private TextView beerPrioe;
     private int liczPiw;
     private Beer beerList;
     private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
+    int realBeerNumber;
     Calendar c;
     String date;
     AlertDialog.Builder builder;
@@ -65,19 +71,23 @@ public class BeerFragment extends Fragment {
         button2 = (Button) view.findViewById(R.id.button2);
         saveButton = (Button) view.findViewById(R.id.saveButton);
         BeerPrice = (Button) view.findViewById(R.id.BeerPrice);
-
+        addBeers = (Button) view.findViewById(R.id.addBeers);
         cenaOstateczna = (TextView) view.findViewById(R.id.textView2);
         liczbaPiw = (TextView) view.findViewById(R.id.liczbaPiw);
+        beerPrioe = (TextView) view.findViewById(R.id.beerPrice);
 
         c = Calendar.getInstance();
 
         liczPiw = 0;
+        realBeerNumber = 0;
         liczbaPiw.setText(Integer.toString(liczPiw));
 
         beerList = new Beer();
         beerList.setPrice(0);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Beers");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid()).child("BeerList");
+        mAuth = FirebaseAuth.getInstance();
 
         button.setOnClickListener((new View.OnClickListener() {
             public void onClick(View v) {
@@ -85,19 +95,18 @@ public class BeerFragment extends Fragment {
                     liczPiw = 0;
                 else
                     liczPiw--;
+                beerList.setQuantity(liczPiw);
                 liczbaPiw.setText(Integer.toString(liczPiw));
 
-                beerList.setQuantity(liczPiw);
-                cenaOstateczna.setText("Cena Ostateczna " + beerList.getFinalPrice());
             }
         }));
 
         button2.setOnClickListener((new View.OnClickListener() {
             public void onClick(View v) {
                 liczPiw++;
-                liczbaPiw.setText(Integer.toString(liczPiw));
                 beerList.setQuantity(liczPiw);
-                cenaOstateczna.setText("Cena Ostateczna " + beerList.getFinalPrice());
+                liczbaPiw.setText(Integer.toString(liczPiw));
+
             }
         }));
         Archive.setOnClickListener((new View.OnClickListener() {
@@ -107,6 +116,25 @@ public class BeerFragment extends Fragment {
                         .replace(R.id.content_frame, ArchiveFragment.newInstance(null),"archiveFragment")
                         .addToBackStack("archive")
                         .commit();
+            }
+        }));
+
+        addBeers.setOnClickListener((new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                realBeerNumber += beerList.getQuantity();
+
+                beerList.setQuantity(Integer.parseInt(liczbaPiw.getText().toString()));
+                beerList.setFinalPrice((beerList.getFinalPrice() + (beerList.getQuantity() * beerList.getPrice())));
+                beerList.setQuantity(0);
+                beerList.setPrice(0.0);
+                liczPiw = 0;
+                liczbaPiw.setText(Integer.toString(liczPiw));
+                beerList.setQuantity(realBeerNumber);
+                cenaOstateczna.setText("Cena Ostateczna " + beerList.getFinalPrice());
+                beerPrioe.setText("Cena piwa:");
+
             }
         }));
         BeerPrice.setOnClickListener((new View.OnClickListener() {
@@ -134,6 +162,7 @@ public class BeerFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 beerList.setPrice( Double.parseDouble(input.getText().toString()));
+                beerPrioe.setText("Cena piwa: " + beerList.getPrice());
             }
         });
         builder.setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {

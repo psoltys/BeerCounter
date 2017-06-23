@@ -1,7 +1,8 @@
 package com.example.piotr.beercounter;
 
-import java.io.Serializable;
+import com.google.firebase.database.Exclude;
 
+import java.io.Serializable;
 /**
  * Created by Piotr on 2017-06-15.
  */
@@ -10,8 +11,10 @@ public class Beer implements Serializable {
     private long id;
     private double price;
     private int quantity;
-    private String finalPrice;
+    private double finalPrice;
     private String date;
+    @Exclude
+    private String key;
 
     public long getId(){
         return id;
@@ -37,9 +40,18 @@ public class Beer implements Serializable {
         this.quantity = quantity;
     }
 
-    public String getFinalPrice(){
-        finalPrice = Double.toString(price* quantity);
+    public double getFinalPrice(){
         return finalPrice;
+    }
+    public void setFinalPrice(double finalPrice){
+        this.finalPrice = finalPrice;
+    }
+
+    public void setKey(String key){
+        this.key = key;
+    }
+    public String getKey(){
+        return key;
     }
 
     public void setDate(String date){

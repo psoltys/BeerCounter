@@ -72,11 +72,7 @@
 
         new_act.setOnClickListener((new View.OnClickListener() {
             public void onClick(View v) {
-//                getFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.content_frame, BeerFragment.newInstance("cos"),"beerFragment")
-//                        .addToBackStack("beer")
-//                        .commit();
+//
                 signIn();
             }
         }));
