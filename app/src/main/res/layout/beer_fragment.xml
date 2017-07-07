@@ -99,4 +99,20 @@
         android:layout_alignBottom="@+id/BeerPrice"
         android:layout_alignEnd="@+id/button2" />
 
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="pozycz"
+        android:layout_below="@+id/button"
+        android:layout_alignStart="@+id/button" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Jedzenie"
+        android:layout_below="@+id/button2"
+        android:layout_alignStart="@+id/button2" />
+
 </RelativeLayout>

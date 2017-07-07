@@ -18,6 +18,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import com.example.piotr.beercounter.Beer;
+import com.example.piotr.beercounter.Borrow;
+import com.example.piotr.beercounter.Food;
 import com.example.piotr.beercounter.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -70,6 +72,33 @@ public class ArchiveFragment extends Fragment {
                 return true;
             }
 
+        });
+
+        beerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Object selectedBeer = beerList.getItemAtPosition(i);
+                Beer selBeer = (Beer) selectedBeer;
+
+                ArrayList<Borrow> borrowed = selBeer.getBorrowed();
+                ArrayList<Food> foods = selBeer.getFood();
+                ArrayList<String> boorAndfoods =new ArrayList<String>();
+                for(Borrow borrow: borrowed){
+                    boorAndfoods.add("Dlugi: " + borrow.toString());
+                }
+                for(Food food : foods){
+                    boorAndfoods.add("Jedzenie: " + food.toString());
+                }
+                builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Lista dlugow i jedzenia:");
+                builder.setItems(boorAndfoods.toArray(new String[borrowed.size()]), new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int position) {
+                        dialog.cancel();
+                    }});
+                builder.show();
+            }
         });
 
         mDatabase.addChildEventListener(new ChildEventListener() {

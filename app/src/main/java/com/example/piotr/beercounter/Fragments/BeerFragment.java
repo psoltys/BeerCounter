@@ -3,6 +3,7 @@ package com.example.piotr.beercounter.Fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.piotr.beercounter.Beer;
 import com.example.piotr.beercounter.R;
@@ -28,6 +30,8 @@ public class BeerFragment extends Fragment {
 
     private Button button;
     private Button button2;
+    private Button button3;
+    private Button button4;
     private Button saveButton;
     private Button BeerPrice;
     private Button addBeers;
@@ -68,6 +72,8 @@ public class BeerFragment extends Fragment {
 
         button = (Button) view.findViewById(R.id.button);
         button2 = (Button) view.findViewById(R.id.button2);
+        button3 = (Button) view.findViewById(R.id.button3);
+        button4 = (Button) view.findViewById(R.id.button4);
         saveButton = (Button) view.findViewById(R.id.saveButton);
         BeerPrice = (Button) view.findViewById(R.id.BeerPrice);
         addBeers = (Button) view.findViewById(R.id.addBeers);
@@ -146,7 +152,18 @@ public class BeerFragment extends Fragment {
             public void onClick(View v) {
                 showSaveDialog();}
         }));
-
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showBorrowDialog();
+            }
+        });
+        button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showFoodDialog();
+            }
+        });
         return view;
     }
     private void showBeerDialog()
@@ -199,6 +216,76 @@ public class BeerFragment extends Fragment {
                         .replace(R.id.content_frame, ArchiveFragment.newInstance(beerList),"beerFragment")
                         .addToBackStack("archive")
                         .commit();
+            }
+        });
+        builder.setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+
+            }
+        });
+        builder.show();
+    }
+    private void showFoodDialog(){
+        Context context = getActivity();
+        LinearLayout layout = new LinearLayout(context);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        final EditText titleBox = new EditText(context);
+        titleBox.setHint("Nazwa jedzenia");
+        layout.addView(titleBox);
+
+        final EditText descriptionBox = new EditText(context);
+        descriptionBox.setInputType(InputType.TYPE_CLASS_NUMBER |  InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        descriptionBox.setHint("Cena");
+        layout.addView(descriptionBox);
+
+
+        final DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.CEILING);
+        builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Co zjadles?");
+        builder.setView(layout);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                beerList.setFood(titleBox.getText().toString(), Double.parseDouble(descriptionBox.getText().toString()));
+            }
+        });
+        builder.setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+
+            }
+        });
+        builder.show();
+    }
+    private void showBorrowDialog(){
+        Context context = getActivity();
+        LinearLayout layout = new LinearLayout(context);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        final EditText titleBox = new EditText(context);
+        titleBox.setHint("Komu pozyczyles?");
+        layout.addView(titleBox);
+
+        final EditText descriptionBox = new EditText(context);
+        descriptionBox.setInputType(InputType.TYPE_CLASS_NUMBER |  InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        descriptionBox.setHint("Ile:");
+        layout.addView(descriptionBox);
+
+        final DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.CEILING);
+        builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Komu pozyczyles?");
+
+        builder.setView(layout);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                beerList.setBorrowed(titleBox.getText().toString(), Double.parseDouble(descriptionBox.getText().toString()));
             }
         });
         builder.setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {

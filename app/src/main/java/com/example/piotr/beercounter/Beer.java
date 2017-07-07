@@ -3,16 +3,20 @@ package com.example.piotr.beercounter;
 import com.google.firebase.database.Exclude;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+
 /**
  * Created by Piotr on 2017-06-15.
  */
 
 public class Beer implements Serializable {
     private long id;
-    private double price;
+    private double price =0 ;
     private int quantity;
     private double finalPrice;
     private String date;
+    private ArrayList<Food> food= new ArrayList<Food>();
+    private ArrayList<Borrow> borrowed = new ArrayList<Borrow>();
     @Exclude
     private String key;
 
@@ -38,6 +42,22 @@ public class Beer implements Serializable {
 
     public void setQuantity(int quantity){
         this.quantity = quantity;
+    }
+
+    public void setBorrowed(String borrowed, double price){
+        this.finalPrice +=price;
+        this.borrowed.add(new Borrow(borrowed,price));
+    }
+    public void setFood(String food, double price){
+        this.finalPrice +=price;
+        this.food.add(new Food(food, price));
+    }
+
+    public ArrayList getFood(){
+        return food;
+    }
+    public ArrayList getBorrowed() {
+        return borrowed;
     }
 
     public double getFinalPrice(){
