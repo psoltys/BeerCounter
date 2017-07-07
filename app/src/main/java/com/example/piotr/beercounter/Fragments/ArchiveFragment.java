@@ -3,20 +3,21 @@ package com.example.piotr.beercounter.Fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
-
-import com.example.piotr.beercounter.Adapters.ListAdapter;
 import com.example.piotr.beercounter.Beer;
-import com.example.piotr.beercounter.BeerCursorAdapter;
 import com.example.piotr.beercounter.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,7 +28,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class ArchiveFragment extends Fragment {
 
@@ -47,28 +48,28 @@ public class ArchiveFragment extends Fragment {
     private ListView beerList;
     private RecyclerView beerRec;
     private DatabaseReference mDatabase;
+    AlertDialog.Builder builder;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.archive_fragment, container, false);
         final Activity activity = getActivity();
 
-       // beerRec = (RecyclerView) view.findViewById(R.id.beerRec);
-        //LinearLayoutManager llm = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
-        //beerRec.setLayoutManager(llm);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         beerList = (ListView)view.findViewById(R.id.beerList);
         final ArrayAdapter<Beer> arrayAdapter = new ArrayAdapter<Beer>(getActivity(), android.R.layout.simple_list_item_1,beerDB);
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(user.getUid()).child("BeerList");
         beerList.setAdapter(arrayAdapter);
 
-        beerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        beerList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Object deletedBeer = beerList.getItemAtPosition(i);
                 Beer delBeer = (Beer) deletedBeer;
                 deleteBeer(delBeer.getKey());
+                return true;
             }
+
         });
 
         mDatabase.addChildEventListener(new ChildEventListener() {
@@ -92,7 +93,6 @@ public class ArchiveFragment extends Fragment {
                 String key = dataSnapshot.getKey();
 
                 for (int i = 0; i < beerDB.size(); i++) {
-                    // Find the item to remove and then remove it by index
                     if (beerDB.get(i).getKey().equals(key)) {
                         beerDB.remove(i);
                         break;
@@ -116,21 +116,30 @@ public class ArchiveFragment extends Fragment {
         });
 
         return view;
-//    }
-    }
-    public void deleteBeer(String key){
-        mDatabase.child(key).removeValue();
+   }
+
+    public void deleteBeer(final String key){
+        builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Czy wykasować element?");
+
+        final EditText input = new EditText(getActivity());
+        input.setInputType(InputType.TYPE_CLASS_NUMBER |  InputType.TYPE_NUMBER_FLAG_DECIMAL);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mDatabase.child(key).removeValue();
+            }
+        });
+        builder.setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+
+            }
+        });
+        builder.show();
+
 
     }
-//    @Override
-//    public void onResume() {
-//        beerDB.open();
-//        super.onResume();
-//    }
-//
-//    @Override
-//    public void onPause() {
-//        beerDB.close();
-//        super.onPause();
-//    }
     }

@@ -16,6 +16,7 @@
         import android.view.ViewGroup;
         import android.widget.Button;
         import android.widget.EditText;
+        import android.widget.ImageView;
         import android.widget.Toast;
 
         import com.example.piotr.beercounter.MainActivity;
@@ -33,7 +34,9 @@
     private EditText passwordText;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuth mAuth;
-    public static MainFragment newInstance(String loading_msg) {
+     private ImageView mImageView;
+
+            public static MainFragment newInstance(String loading_msg) {
         MainFragment loadingFragment = new MainFragment();
         if (loading_msg != null) {
             Bundle args = new Bundle();
@@ -52,6 +55,8 @@
         final Activity activity = getActivity();
         new_act = (Button) view.findViewById(R.id.new_activity);
         registerBtn = (Button) view.findViewById(R.id.registerBtn);
+        mImageView = (ImageView) view.findViewById(R.id.Img);
+        mImageView.setImageResource(R.drawable.web_hi_res_512);
 
         emailText = (EditText) view.findViewById(R.id.emailText);
         passwordText = (EditText) view.findViewById(R.id.passwordText);

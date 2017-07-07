@@ -11,44 +11,53 @@
     tools:context="com.example.piotr.beercounter.MainActivity">
 
 
+    <ImageView
+        android:id="@+id/Img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/registerBtn"
+        android:layout_above="@+id/emailText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="75dp" />
+
     <Button
         android:id="@+id/registerBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="zarejestruj"
-        android:layout_below="@+id/new_activity"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:id="@+id/new_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Zaloguj"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Zaloguj" />
+        android:layout_marginBottom="15dp" />
 
     <EditText
         android:id="@+id/emailText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="55dp"
         android:ems="10"
         android:hint="Email"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:layout_marginBottom="71dp"
+        android:layout_above="@+id/new_activity"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:id="@+id/passwordText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/emailText"
-        android:layout_below="@+id/emailText"
-        android:layout_marginTop="29dp"
         android:ems="10"
         android:hint="password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:layout_alignTop="@+id/emailText"
+        android:layout_alignStart="@+id/emailText"
+        android:layout_marginTop="47dp" />
 
 
 </RelativeLayout>

@@ -3,9 +3,7 @@ package com.example.piotr.beercounter.Fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
@@ -16,13 +14,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.example.piotr.beercounter.Beer;
-import com.example.piotr.beercounter.BeerCursorAdapter;
 import com.example.piotr.beercounter.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 
 public class BeerFragment extends Fragment {
@@ -124,7 +123,8 @@ public class BeerFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 realBeerNumber += beerList.getQuantity();
-
+                DecimalFormat df = new DecimalFormat("#.##");
+                df.setRoundingMode(RoundingMode.CEILING);
                 beerList.setQuantity(Integer.parseInt(liczbaPiw.getText().toString()));
                 beerList.setFinalPrice((beerList.getFinalPrice() + (beerList.getQuantity() * beerList.getPrice())));
                 beerList.setQuantity(0);
@@ -132,7 +132,7 @@ public class BeerFragment extends Fragment {
                 liczPiw = 0;
                 liczbaPiw.setText(Integer.toString(liczPiw));
                 beerList.setQuantity(realBeerNumber);
-                cenaOstateczna.setText("Cena Ostateczna " + beerList.getFinalPrice());
+                cenaOstateczna.setText("Cena Ostateczna " + df.format(beerList.getFinalPrice()));
                 beerPrioe.setText("Cena piwa:");
 
             }
@@ -151,6 +151,8 @@ public class BeerFragment extends Fragment {
     }
     private void showBeerDialog()
     {
+        final DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.CEILING);
         builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Ustaw Cenę Piwa");
 
@@ -162,7 +164,7 @@ public class BeerFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 beerList.setPrice( Double.parseDouble(input.getText().toString()));
-                beerPrioe.setText("Cena piwa: " + beerList.getPrice());
+                beerPrioe.setText("Cena piwa: " +  df.format(beerList.getPrice()));
             }
         });
         builder.setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
